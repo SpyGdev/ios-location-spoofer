@@ -14,14 +14,11 @@ jobs:
       - name: Show Xcode version
         run: xcodebuild -version
 
-      - name: List schemes
-        run: xcodebuild -project location-spoofer.xcodeproj -list
-
       - name: Build app
         run: |
           xcodebuild \
             -project location-spoofer.xcodeproj \
-            -scheme GoSpoofer \
+            -scheme location-spoofer \
             -configuration Release \
             -sdk iphoneos \
             CODE_SIGNING_ALLOWED=NO \
@@ -32,14 +29,14 @@ jobs:
 
       - name: Copy app into Payload
         run: |
-          cp -r build/Release-iphoneos/GoSpoofer.app Payload/
+          cp -r build/Release-iphoneos/location-spoofer.app Payload/
 
       - name: Create IPA
         run: |
-          zip -r GoSpoofer.ipa Payload
+          zip -r location-spoofer.ipa Payload
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
           name: unsigned-ipa
-          path: GoSpoofer.ipa
+          path: location-spoofer.ipa
